@@ -29,7 +29,7 @@ int background_exec = 0;    // indicação de execução concorrente com a mini-
 // declaração de funções
 COMMAND* parse(char* linha);
 int print_parse(COMMAND* commlist);
-void execute_commands(int number, COMMAND* commlist);
+void execute_commands(int number, COMMAND* commlist); //berna51
 void free_commlist(COMMAND* commlist);
 
 // include do código do parser da linha de comandos
