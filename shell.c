@@ -97,7 +97,7 @@ void execute_commands(int number, COMMAND *commlist) {
     cursor=commlist;
     for(i=0; i<number-1; i++){
       if(pipe(fd[i])==-1){
-	perror("ERROR: did not create comunication channels!");
+	perror("ERROR: pipe!");
 	exit(1);
       }
     }
@@ -105,14 +105,14 @@ void execute_commands(int number, COMMAND *commlist) {
     while(cursor!=NULL){
       pid=fork();
       if(pid==-1){
-	perror("ERROR; Did not create child!");
+	perror("ERROR; fork!");
 	exit(1);
       }
       else if(pid==0){
 	if(inputfile!=NULL && i==0){
 	  int inputCh = open(inputfile, O_RDONLY);
 	  if(inputCh<0){
-	    perror("ERRO: impossivel abrir o ficheiro!");
+	    perror("ERROR: couldn't open file!");
 	    exit(1);
 	  }
 	  dup2(inputCh, PIPE_READ);
@@ -120,7 +120,7 @@ void execute_commands(int number, COMMAND *commlist) {
 	if(outputfile!=NULL && i==number-1){
 	  int outputCh = open(outputfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	  if(outputCh<0){
-	    perror("ERRO: impossivel aceder ao ficheiro!");
+	    perror("ERRO: couldn't open file!");
 	    exit(1);
 	  }
 	  dup2(outputCh, PIPE_WRITE);
